@@ -1,0 +1,202 @@
+{
+  "_comment": "Reference example showing the complete audit_data.json shape build_audit.js expects. Built from the ClearanceLab pilot run. Use this as a template — every section is optional except client.name. Save your real audit data as audit_data.json, then run: node build_audit.js audit_data.json output.docx",
+
+  "client": {
+    "name": "Clearance Lab",
+    "subtitle": "Positioning, Pricing & Feature Gaps in AI Label-Compliance Tooling",
+    "preparedFor": "Brian",
+    "date": "2026-04-27",
+    "preparedBy": "Capsule (competitive-audit skill)",
+    "inputMode": "url",
+    "sources": [
+      { "type": "url", "value": "https://clearancelab.ai" }
+    ]
+  },
+
+  "brand": {
+    "primary": "1F3A5F",
+    "subheadAccent": "2E5984",
+    "highlight": "FFF7E6",
+    "zebra": "F2F4F7",
+    "muted": "808080",
+    "font": "Calibri"
+  },
+
+  "sections": {
+    "executiveSummary": {
+      "paragraph": "Clearance Lab is a credit-priced, AI-native label compliance checker for FDA, EU FIC, AAFCO, and adjacent frameworks across food, pet, cosmetics, supplements, and pharma. It enters a category that has split into three camps: AI-native MVPs (the client's tier), AI-augmented enterprise platforms, and incumbent regulatory/supplier suites.",
+      "bullets": [
+        "Pricing is genuinely disruptive. The client sells scans for $0.83–$1.27. The closest AI competitor starts at $500/month. At any volume below ~400 scans/month, the client is 5–50× cheaper.",
+        "Multi-industry breadth is unique. No competitor covers all five domains at this price point.",
+        "Trust and depth are the real gaps. No SOC 2, no named regulatory advisor, no enterprise tier."
+      ],
+      "callout": "Bottom line: the product is priced for self-serve and SMB. The upside is opening a credible enterprise track ($25K–$60K/yr) without breaking the self-serve magic."
+    },
+
+    "clientSnapshot": {
+      "blocks": [
+        {
+          "heading": "Product",
+          "items": [
+            { "head": "Tagline:", "body": " \"Ensure Regulatory Compliance with AI.\" Upload packaging → instant compliance analysis." },
+            { "head": "Core promise:", "body": " AI-powered review in under 60 seconds, with prioritized fixes." },
+            { "head": "Output:", "body": " Severity-ranked report with specific regulation citations and exportable PDF." }
+          ]
+        },
+        {
+          "heading": "Coverage",
+          "items": [
+            { "head": "Human food:", "body": " FDA 21 CFR · EU FIC 1169/2011 · FSA · CFIA" },
+            { "head": "Pet food:", "body": " AAFCO · FDA CVM · EU 767/2009" },
+            { "head": "Cosmetics:", "body": " FDA FD&C · EU 1223/2009 · Health Canada" },
+            { "head": "Supplements:", "body": " FDA DSHEA · EU 2002/46/EC" }
+          ]
+        }
+      ],
+      "pricingIntro": "Credit-based, no subscription. Unique in the category.",
+      "priceTable": {
+        "widths": [1700, 900, 900, 1400, 4460],
+        "rows": [
+          ["Plan", "Price", "Credits", "$/scan", "Includes"],
+          ["Starter", "$19", "15", "$1.27", "All domains, fix recs, PDF, email support"],
+          ["Pro", "$49", "40", "$1.23", "+ audit trail, team seats, priority support"],
+          ["Business", "$99", "100", "$0.99", "+ multi-SKU tracking, full collaboration"],
+          ["Agency", "$249", "300", "$0.83", "+ unlimited team, white-label, SLA"]
+        ]
+      },
+      "callouts": [
+        "Footer reads \"© 2026 Capsule\" — fix brand mismatch before any enterprise prospect notices."
+      ],
+      "flags": [
+        "No enterprise tier above $249 — leaves $25K+ deals on the table.",
+        "No SOC 2 badge or security page surface."
+      ]
+    },
+
+    "landscape": {
+      "intro": "Four tiers organize the AI label-compliance category by pricing posture and product depth.",
+      "table": {
+        "widths": [1700, 2400, 2000, 3260],
+        "rows": [
+          ["Tier", "Players", "Pricing range", "Strategic posture"],
+          ["Tier 1 — AI-native rivals", "Label Score AI, Labelring", "$500–$5,000/mo", "Closest direct threat"],
+          ["Tier 2 — AI-augmented platforms", "Artwork Flow, GlobalVision", "$10K–$60K+/yr", "Workflow + AI"],
+          ["Tier 3 — Enterprise incumbents", "Trustwell, TraceGains", "$3.5K–$100K+/yr", "Own the enterprise"],
+          ["Tier 4 — DIY low-end", "FoodLabelMaker, LabelCalc", "$25–$300/mo", "Sets SMB price anchor"]
+        ]
+      }
+    },
+
+    "competitorProfiles": {
+      "tiers": [
+        {
+          "heading": "Tier 1 — Direct AI-native rivals",
+          "competitors": [
+            {
+              "name": "Label Score AI (GoVisually)",
+              "facts": [
+                { "label": "Pitch", "value": "Instant FDA compliance check; 1–100 score in under 30 seconds." },
+                { "label": "Pricing", "value": "$500–$5,000/mo subscription" },
+                { "label": "Threat level", "value": "HIGH — closest direct competitor with public pricing" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    "pricing": {
+      "intro": "Pricing in the category spans roughly two orders of magnitude.",
+      "vendorTable": {
+        "widths": [2100, 1800, 1800, 1800, 1860],
+        "rows": [
+          ["Vendor", "Entry", "Mid/Pro", "Enterprise", "Pricing model"],
+          ["Clearance Lab", "$19", "$49–$99", "$249", "Pay-as-you-go credits"],
+          ["Label Score AI", "$500/mo", "$1.5K–$3K/mo", "$5,000/mo", "Subscription"]
+        ]
+      },
+      "economics": {
+        "intro": "Per-scan cost at typical volumes:",
+        "table": {
+          "widths": [1800, 2700, 2700, 2160],
+          "rows": [
+            ["Monthly scans", "Clearance Lab", "Label Score AI", "Clearance Lab is …"],
+            ["10", "$19 ($1.90/scan)", "$500 ($50/scan)", "26× cheaper"],
+            ["100", "$99 ($0.99/scan)", "$1,500 ($15/scan)", "15× cheaper"]
+          ]
+        }
+      },
+      "commentary": [
+        "Lead with the price gap above the fold on the site.",
+        "Add a Pro Monthly subscription tier as a hedge against credit-pack churn."
+      ]
+    },
+
+    "features": {
+      "intro": "Y = supports today, ~ = partial/unclear, N = not in scope.",
+      "table": {
+        "widths": [2400, 1320, 1320, 1320, 1500, 1500],
+        "rows": [
+          ["Capability", "Client", "Label Score", "Artwork Flow", "Trustwell", "TraceGains"],
+          ["FDA food labeling", "Y", "Y", "Y", "Y", "Y"],
+          ["AAFCO / pet food", "Y", "~", "~", "~", "N"],
+          ["SOC 2 / SSO", "N", "Y", "Y", "Y", "Y"]
+        ]
+      }
+    },
+
+    "winsAndGaps": {
+      "wins": [
+        "Pricing & access. $19 entry, $0.83–$1.27 per scan — nothing else in the AI tier comes close.",
+        "Multi-industry breadth. Five domains in one workspace."
+      ],
+      "parity": [
+        "FDA, EU FIC, AAFCO framework coverage — every competitor advertises these."
+      ],
+      "gaps": [
+        "No SOC 2 / SSO / enterprise security signals.",
+        "No enterprise tier above $249.",
+        "No public API or integrations."
+      ]
+    },
+
+    "recommendations": {
+      "intro": "Ordered by leverage — impact per unit of effort.",
+      "a": [
+        "Fix the \"© 2026 Capsule\" footer mismatch.",
+        "Add a Trust / Security page (SOC 2 status, encryption, data residency).",
+        "Add a named regulatory advisor to the site.",
+        "Lead with the price comparison above the fold."
+      ],
+      "b": [
+        "Public regulation coverage matrix (CFR Parts, EU regs, version-dated).",
+        "Bulk scan / folder upload.",
+        "Public REST API + Figma plugin."
+      ],
+      "c": [
+        "Publish a self-serve Starter tier ($199–$299/mo, 25 label reviews/mo).",
+        "Add a Pro Monthly subscription alongside credit packs.",
+        "Enterprise tier as \"Talk to sales\" ($25K–$60K/yr)."
+      ],
+      "d": [
+        "Buyer-specific landing pages (/supplements, /pet-food, /cosmetics, /pharma).",
+        "Lean into the \"only AI tool that covers all five domains\" wedge.",
+        "Public benchmark teardown content."
+      ]
+    },
+
+    "openQuestions": {
+      "intro": "Answers to these will sharpen the next pass.",
+      "items": [
+        "What is the current pricing and packaging? (Tiers, what's gated where.)",
+        "Who is the primary ICP today?",
+        "Which industry has the most paying customers right now?"
+      ]
+    },
+
+    "sources": [
+      { "label": "ClearanceLab — live site", "url": "https://clearancelab.ai/" },
+      { "label": "Label Score AI by GoVisually", "url": "https://labelscore.ai/" }
+    ]
+  }
+}
