@@ -18,38 +18,39 @@ Set `client.inputMode` to `"url"`, `"document"`, or `"hybrid"` based on the answ
 
 ### Step 2A — URL input
 
-Try browsers in order. Do not prompt the user between attempts — silently fall through.
+**Default: Playwright (headless).** Same behavior on every machine, no visible browser windows. Order:
 
-**Tier 1: Chrome MCP** (preferred on machines where the user has Cowork + Chrome extension)
-
-```
-mcp__Claude_in_Chrome__list_connected_browsers     # if multiple, ask which
-mcp__Claude_in_Chrome__select_browser              # connect to the one chosen
-mcp__Claude_in_Chrome__tabs_context_mcp            # createIfEmpty: true
-mcp__Claude_in_Chrome__navigate                    # to the client URL
-mcp__Claude_in_Chrome__get_page_text               # full text extraction
-```
-
-If `list_connected_browsers` returns empty OR any Chrome MCP tool errors with "not connected" — move to Tier 2 immediately.
-
-**Tier 2: Playwright MCP** (headless fallback — works on Forge / Mac Studio server)
+**Tier 1: Playwright MCP** (default — headless, identical behavior Powerbook ↔ Forge ↔ any machine)
 
 ```
 mcp__playwright__browser_navigate                  # to the client URL
 mcp__playwright__browser_snapshot                  # accessibility tree + text
-# or:
-mcp__playwright__browser_evaluate                  # for { document.body.innerText }
+mcp__playwright__browser_take_screenshot           # only if visual analysis needed
+# or for raw text extraction:
+mcp__playwright__browser_evaluate                  # { document.body.innerText }
 ```
 
-Playwright is connected by default on most Claude Code installs. Use this when on Forge or any session that doesn't have Chrome MCP.
+Use this for every audit unless the user explicitly says "use my Chrome session" or the target site requires an authenticated user state.
+
+**Tier 2: Chrome MCP** (only when needed — paywalled content, internal tools, signed-in-only state)
+
+```
+mcp__Claude_in_Chrome__list_connected_browsers
+mcp__Claude_in_Chrome__select_browser
+mcp__Claude_in_Chrome__tabs_context_mcp            # createIfEmpty: true
+mcp__Claude_in_Chrome__navigate
+mcp__Claude_in_Chrome__get_page_text
+```
+
+Switching to Chrome opens a visible browser window. Only do this when Playwright's headless context genuinely cannot satisfy the audit.
 
 **Tier 3: `web_fetch`** (last resort — text-only, may miss JS-rendered content)
 
-Only use if both Tier 1 and Tier 2 fail. Flag in the methodology callout that the extraction may be incomplete.
+Only when Tier 1 and Tier 2 both fail. Flag in the methodology callout that the extraction may be incomplete.
 
 **Never use** raw web search snippets for the client site — they produce wrong audits.
 
-For pages with pricing or feature info on sub-pages, navigate to each and extract. Always include the pricing page if it exists.
+For pages with pricing or feature info on sub-pages, navigate to each and extract via the same tier. Always include the pricing page if it exists.
 
 ### Step 2B — Document input
 

@@ -12,7 +12,7 @@
       "name": "competitive-audit",
       "source": "./plugins/competitive-audit",
       "description": "Designed by Capsule. Produces a professionally formatted Word competitive audit of a client's product against their market. Accepts a live website URL, an uploaded document (PDF / Word / PowerPoint / text), or both. Identifies the competitor set across four pricing tiers, runs per-competitor research, and builds a styled docx with executive summary, pricing comparison, feature matrix, wins/parity/gaps analysis, and prioritized recommendations (Trust / Product / Pricing / GTM).",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": {
         "name": "Capsule",
         "url": "https://clearancelab.ai"
