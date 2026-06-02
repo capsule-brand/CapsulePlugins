@@ -18,6 +18,10 @@ Set `client.inputMode` to `"url"`, `"document"`, or `"hybrid"` based on the answ
 
 ### Step 2A — URL input
 
+Try browsers in order. Do not prompt the user between attempts — silently fall through.
+
+**Tier 1: Chrome MCP** (preferred on machines where the user has Cowork + Chrome extension)
+
 ```
 mcp__Claude_in_Chrome__list_connected_browsers     # if multiple, ask which
 mcp__Claude_in_Chrome__select_browser              # connect to the one chosen
@@ -26,7 +30,24 @@ mcp__Claude_in_Chrome__navigate                    # to the client URL
 mcp__Claude_in_Chrome__get_page_text               # full text extraction
 ```
 
-If Chrome isn't connected, ask the user to install/connect the Claude in Chrome extension. Do not fall back to `web_fetch` for the client site — search snippets and minimal head-tag fetches will produce a wrong audit.
+If `list_connected_browsers` returns empty OR any Chrome MCP tool errors with "not connected" — move to Tier 2 immediately.
+
+**Tier 2: Playwright MCP** (headless fallback — works on Forge / Mac Studio server)
+
+```
+mcp__playwright__browser_navigate                  # to the client URL
+mcp__playwright__browser_snapshot                  # accessibility tree + text
+# or:
+mcp__playwright__browser_evaluate                  # for { document.body.innerText }
+```
+
+Playwright is connected by default on most Claude Code installs. Use this when on Forge or any session that doesn't have Chrome MCP.
+
+**Tier 3: `web_fetch`** (last resort — text-only, may miss JS-rendered content)
+
+Only use if both Tier 1 and Tier 2 fail. Flag in the methodology callout that the extraction may be incomplete.
+
+**Never use** raw web search snippets for the client site — they produce wrong audits.
 
 For pages with pricing or feature info on sub-pages, navigate to each and extract. Always include the pricing page if it exists.
 

@@ -36,7 +36,13 @@ See `references/document-input.md` for how to extract client-snapshot facts from
 
 **Read the actual source, never search snippets.** If a URL is provided, read the live site via Chrome MCP. If a document is provided, parse it with the pdf/docx/pptx skill. Search-only analysis produced the wrong audit in early test runs and is the single biggest correctness risk.
 
-**For URL input, always use Chrome MCP.** `mcp__Claude_in_Chrome__navigate` + `mcp__Claude_in_Chrome__get_page_text` is the canonical extraction path. Take a screenshot if visual analysis (brand colors, hero composition) is needed. If the URL is blocked by the network allowlist, ask the user to add it in Settings → Capabilities or paste the homepage copy.
+**For URL input, prefer Chrome MCP; fall back to Playwright MCP on headless machines.** Order of attempts:
+
+1. `mcp__Claude_in_Chrome__navigate` + `mcp__Claude_in_Chrome__get_page_text` (canonical — best fidelity, uses the user's signed-in browser session)
+2. `mcp__playwright__browser_navigate` + `mcp__playwright__browser_snapshot` (headless fallback — works on Forge / Mac Studio server)
+3. `web_fetch` (last resort — text only, may miss JS-rendered content)
+
+If Chrome MCP isn't available, do not stop — silently fall through to Playwright. Detect availability by attempting the tool call once; if it errors with "not connected" or similar, move to the next tier without prompting the user. Take a screenshot via whichever browser MCP succeeded if visual analysis (brand colors, hero composition) is needed.
 
 **For document input, use the appropriate extraction skill.** PDF → pdf skill (Read tool works for small files). Word doc → docx skill. PowerPoint → pptx skill. Plain text/markdown → Read tool directly. After extraction, transcribe the same client-snapshot facts the URL path produces (see `references/document-input.md`).
 
