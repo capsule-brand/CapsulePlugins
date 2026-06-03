@@ -36,13 +36,13 @@ See `references/document-input.md` for how to extract client-snapshot facts from
 
 **Read the actual source, never search snippets.** If a URL is provided, read the live site via Chrome MCP. If a document is provided, parse it with the pdf/docx/pptx skill. Search-only analysis produced the wrong audit in early test runs and is the single biggest correctness risk.
 
-**For URL input, default to headless Playwright. Chrome MCP only when explicitly needed.** Order of attempts:
+**For URL input, default to headless Playwright CLI. Chrome MCP only when explicitly needed.** Order of attempts:
 
-1. `mcp__playwright__browser_navigate` + `mcp__playwright__browser_snapshot` (default — headless, no visible browser windows, works identically on every Mac including Forge)
+1. `playwright-cli goto <url>` + `playwright-cli snapshot` (default — headless, no visible browser windows, works identically on every Mac including Forge)
 2. `mcp__Claude_in_Chrome__navigate` + `mcp__Claude_in_Chrome__get_page_text` (advanced — only when the user explicitly asks for it, or the site requires authenticated session / paywall bypass / per-user state that Playwright can't replicate)
 3. `web_fetch` (last resort — text only, may miss JS-rendered content)
 
-Playwright is connected by default on every standard Claude Code install. Use it as the primary path. Do not switch to Chrome MCP unless the audit explicitly needs the user's signed-in session — most public marketing, pricing, and product pages render fully headless. Take screenshots via Playwright (`mcp__playwright__browser_take_screenshot`) if visual analysis is needed.
+Playwright CLI is installed as a skill on both machines (`playwright-cli` in PATH). Use it as the primary path. Do not switch to Chrome MCP unless the audit explicitly needs the user's signed-in session — most public marketing, pricing, and product pages render fully headless. Take screenshots via `playwright-cli screenshot` if visual analysis is needed. Always run `playwright-cli close` when done.
 
 **For document input, use the appropriate extraction skill.** PDF → pdf skill (Read tool works for small files). Word doc → docx skill. PowerPoint → pptx skill. Plain text/markdown → Read tool directly. After extraction, transcribe the same client-snapshot facts the URL path produces (see `references/document-input.md`).
 

@@ -18,16 +18,17 @@ Set `client.inputMode` to `"url"`, `"document"`, or `"hybrid"` based on the answ
 
 ### Step 2A — URL input
 
-**Default: Playwright (headless).** Same behavior on every machine, no visible browser windows. Order:
+**Default: Playwright CLI (headless).** Same behavior on every machine, no visible browser windows. Order:
 
-**Tier 1: Playwright MCP** (default — headless, identical behavior Powerbook ↔ Forge ↔ any machine)
+**Tier 1: Playwright CLI** (default — headless, identical behavior Powerbook ↔ Forge ↔ any machine)
 
-```
-mcp__playwright__browser_navigate                  # to the client URL
-mcp__playwright__browser_snapshot                  # accessibility tree + text
-mcp__playwright__browser_take_screenshot           # only if visual analysis needed
+```bash
+playwright-cli goto <client-url>          # navigate to the client URL
+playwright-cli snapshot                   # accessibility tree + text (token-efficient)
+playwright-cli screenshot                 # only if visual analysis needed
 # or for raw text extraction:
-mcp__playwright__browser_evaluate                  # { document.body.innerText }
+playwright-cli eval "document.body.innerText"
+playwright-cli close                      # always close when done
 ```
 
 Use this for every audit unless the user explicitly says "use my Chrome session" or the target site requires an authenticated user state.
