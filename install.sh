@@ -35,7 +35,16 @@ COWORK_OUTPUTS="/Users/brianadducci/Library/Application Support/Claude/local-age
 CAPSULE_DIR="$HOME/CapsulePlugins"
 MARKETPLACE_NAME="capsule-plugins"
 PLUGIN_NAME="competitive-audit"
-MAC_STUDIO_HOST="brianadducci@brians-mac-studio.tail0c9e32.ts.net"
+
+# Optional second-Mac sync target. Public release: not committed.
+# To enable Mac Studio (or any second machine) sync, create:
+#   ~/.config/capsule-plugins/install.conf
+# with one line:
+#   MAC_STUDIO_HOST="username@hostname"
+# The script will SSH there with key-based auth and mirror ~/CapsulePlugins + install.
+USER_CONF="$HOME/.config/capsule-plugins/install.conf"
+[ -f "$USER_CONF" ] && source "$USER_CONF"
+MAC_STUDIO_HOST="${MAC_STUDIO_HOST:-}"
 
 # --- find claude binary ---
 find_claude() {
@@ -104,9 +113,6 @@ git add -A 2>/dev/null
 GIT_AUTHOR_NAME="Capsule" GIT_AUTHOR_EMAIL="plugins@capsule.local" \
 GIT_COMMITTER_NAME="Capsule" GIT_COMMITTER_EMAIL="plugins@capsule.local" \
   git commit -q -m "Initial Capsule plugins marketplace" 2>/dev/null || true
-  # Push to GitHub for backup + distribution
-  git push origin main 2>&1 | tail -2 || echo "  (GitHub push skipped — no remote, no creds, or no changes)"
-
 ok "Initialized Git repo at $CAPSULE_DIR"
 
 # --- step 2: register marketplace, install plugin (Powerbook) ---
@@ -145,15 +151,23 @@ step "Powerbook install complete. Current plugin list:"
 "$CLAUDE_BIN" plugin list
 echo
 
-# --- step 3: mirror to Mac Studio over SSH (Tailscale) ---
-step "Step 3: mirror to Mac Studio over SSH ($MAC_STUDIO_HOST)"
-
-if ! ssh -o ConnectTimeout=5 -o BatchMode=yes "$MAC_STUDIO_HOST" 'echo ok' >/dev/null 2>&1; then
-  warn "SSH to Mac Studio failed (Tailscale offline, or key auth not configured)."
-  warn "Skipping Mac Studio install. Run this script manually on the Mac Studio later, or fix SSH first."
+# --- step 3: mirror to second Mac over SSH (optional) ---
+if [ -z "$MAC_STUDIO_HOST" ]; then
+  step "Step 3: second-Mac sync skipped"
+  warn "MAC_STUDIO_HOST not configured — only installing on this machine."
+  warn "To enable second-Mac sync, create $USER_CONF with:"
+  warn '   MAC_STUDIO_HOST="username@hostname"'
   exit 0
 fi
-ok "SSH to Mac Studio works"
+
+step "Step 3: mirror to second Mac over SSH ($MAC_STUDIO_HOST)"
+
+if ! ssh -o ConnectTimeout=5 -o BatchMode=yes "$MAC_STUDIO_HOST" 'echo ok' >/dev/null 2>&1; then
+  warn "SSH to $MAC_STUDIO_HOST failed (host offline, or key auth not configured)."
+  warn "Skipping second-Mac install. Run this script manually on the second Mac later, or fix SSH first."
+  exit 0
+fi
+ok "SSH to second Mac works"
 
 # Push CapsulePlugins/ via rsync over ssh (preserves perms, deletes stale)
 if command -v rsync >/dev/null; then
