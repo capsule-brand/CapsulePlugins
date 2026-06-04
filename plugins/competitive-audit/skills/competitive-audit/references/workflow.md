@@ -18,17 +18,16 @@ Set `client.inputMode` to `"url"`, `"document"`, or `"hybrid"` based on the answ
 
 ### Step 2A — URL input
 
-**Default: Playwright CLI (headless).** Same behavior on every machine, no visible browser windows. Order:
+**Default: Playwright (headless).** Same behavior on every machine, no visible browser windows. Order:
 
-**Tier 1: Playwright CLI** (default — headless, identical behavior Powerbook ↔ Forge ↔ any machine)
+**Tier 1: Playwright MCP** (default — headless, identical behavior Powerbook ↔ Forge ↔ any machine)
 
-```bash
-playwright-cli goto <client-url>          # navigate to the client URL
-playwright-cli snapshot                   # accessibility tree + text (token-efficient)
-playwright-cli screenshot                 # only if visual analysis needed
+```
+mcp__playwright__browser_navigate                  # to the client URL
+mcp__playwright__browser_snapshot                  # accessibility tree + text
+mcp__playwright__browser_take_screenshot           # only if visual analysis needed
 # or for raw text extraction:
-playwright-cli eval "document.body.innerText"
-playwright-cli close                      # always close when done
+mcp__playwright__browser_evaluate                  # { document.body.innerText }
 ```
 
 Use this for every audit unless the user explicitly says "use my Chrome session" or the target site requires an authenticated user state.
@@ -137,8 +136,18 @@ Run `references/build_audit.js` with the sections object. Steps:
 1. Ensure `docx` is installed in the build dir: `cd <build dir> && npm install docx`
 2. Construct the `data` object — `client`, `brand`, `sections` (see template comments)
 3. Run `node build_audit.js`
-4. Validate with the docx skill's validator if available
-5. Output to `<client>_Competitive_Audit.docx` in the outputs folder
+4. Validate the produced docx if possible
+5. **Default output location: `~/Downloads/<Client>_Competitive_Audit.docx`** — easy for the user to find. Override only if the user explicitly says "save to ~/Desktop/" or "save in my current directory" or names another path.
+
+The build pattern:
+
+```bash
+cd ~/Downloads
+# (audit_data.json lives in the working dir or a tmp dir)
+node /path/to/build_audit.js audit_data.json ~/Downloads/<Client>_Competitive_Audit.docx
+```
+
+If `~/Downloads` doesn't exist or isn't writable (rare), fall back to the user's current working directory and note this in the presentation message.
 
 ## Step 9 — QA before presenting
 
