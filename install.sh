@@ -104,6 +104,9 @@ git add -A 2>/dev/null
 GIT_AUTHOR_NAME="Capsule" GIT_AUTHOR_EMAIL="plugins@capsule.local" \
 GIT_COMMITTER_NAME="Capsule" GIT_COMMITTER_EMAIL="plugins@capsule.local" \
   git commit -q -m "Initial Capsule plugins marketplace" 2>/dev/null || true
+  # Push to GitHub for backup + distribution
+  git push origin main 2>&1 | tail -2 || echo "  (GitHub push skipped — no remote, no creds, or no changes)"
+
 ok "Initialized Git repo at $CAPSULE_DIR"
 
 # --- step 2: register marketplace, install plugin (Powerbook) ---

@@ -95,8 +95,9 @@
             {
               "name": "Label Score AI (GoVisually)",
               "facts": [
-                { "label": "Pitch", "value": "Instant FDA compliance check; 1–100 score in under 30 seconds." },
-                { "label": "Pricing", "value": "$500–$5,000/mo subscription" },
+                { "label": "Pitch", "value": "Instant FDA compliance check; 1–100 score in under 30 seconds.", "cite": 2 },
+                { "label": "Pricing", "value": "$1,500/mo minimum (Compliance AI Suite tier)", "cite": 2 },
+                { "label": "Frameworks", "value": "20+ regulatory frameworks named", "cite": 2 },
                 { "label": "Threat level", "value": "HIGH — closest direct competitor with public pricing" }
               ]
             }

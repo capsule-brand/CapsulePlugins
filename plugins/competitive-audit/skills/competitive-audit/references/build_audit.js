@@ -68,20 +68,43 @@ function h3(text) {
     children: [new TextRun(text)]
   });
 }
-function bullet(text, level = 0) {
+// Citation superscript renderer.
+// `cite` accepts: a number (1), an array ([1, 3, 7]), or undefined/null (no citation).
+function citationRuns(cite) {
+  if (cite === undefined || cite === null) return [];
+  const nums = Array.isArray(cite) ? cite : [cite];
+  if (nums.length === 0) return [];
+  return [new TextRun({
+    text: `[${nums.join(",")}]`,
+    superScript: true,
+    color: TOKENS.subheadAccent,
+    size: 16
+  })];
+}
+
+// bullet() accepts either:
+//   - a plain string: bullet("text")
+//   - an object: bullet({text: "...", cite: 3}) or bullet({text: "...", cite: [1, 5]})
+function bullet(item, level = 0) {
+  const text = typeof item === "string" ? item : item.text;
+  const cite = typeof item === "string" ? null : item.cite;
   return new Paragraph({
     numbering: { reference: "bullets", level },
     spacing: { before: 40, after: 40 },
-    children: [new TextRun(text)]
+    children: [
+      new TextRun(text),
+      ...citationRuns(cite)
+    ]
   });
 }
-function bulletBoldHead(headText, restText, level = 0) {
+function bulletBoldHead(headText, restText, level = 0, cite = null) {
   return new Paragraph({
     numbering: { reference: "bullets", level },
     spacing: { before: 40, after: 40 },
     children: [
       new TextRun({ text: headText, bold: true }),
-      new TextRun({ text: restText })
+      new TextRun({ text: restText }),
+      ...citationRuns(cite)
     ]
   });
 }
@@ -215,8 +238,9 @@ function clientSnapshot() {
   for (const block of S.clientSnapshot.blocks || []) {
     out.push(h2(block.heading));
     for (const item of block.items || []) {
-      if (item.head && item.body) out.push(bulletBoldHead(item.head + " ", item.body));
+      if (item.head && item.body) out.push(bulletBoldHead(item.head + " ", item.body, 0, item.cite));
       else if (typeof item === "string") out.push(bullet(item));
+      else out.push(bullet(item)); // object form {text, cite}
     }
   }
   if (S.clientSnapshot.priceTable) {
@@ -252,7 +276,7 @@ function competitorProfiles() {
     for (const c of tier.competitors || []) {
       out.push(h3(c.name));
       for (const fact of c.facts || []) {
-        out.push(bulletBoldHead(fact.label + ": ", fact.value));
+        out.push(bulletBoldHead(fact.label + ": ", fact.value, 0, fact.cite));
       }
     }
   }
@@ -333,8 +357,17 @@ function sources() {
   if (!S.sources) return [];
   return [
     h1("Sources"),
-    p("Public materials referenced for this audit:", { spacing: { before: 60, after: 80 } }),
-    ...S.sources.map(s => link(s.label, s.url))
+    p("Public materials referenced for this audit. Citations like [1] in the body refer to these numbered entries.", { spacing: { before: 60, after: 80 } }),
+    ...S.sources.map((s, i) => new Paragraph({
+      spacing: { before: 40, after: 40 },
+      children: [
+        new TextRun({ text: `[${i + 1}] `, bold: true, color: TOKENS.subheadAccent }),
+        new ExternalHyperlink({
+          link: s.url,
+          children: [new TextRun({ text: s.label, style: "Hyperlink" })]
+        })
+      ]
+    }))
   ];
 }
 
@@ -435,7 +468,11 @@ DATA SHAPE (audit_data.json)
     },
     "clientSnapshot": {
       "blocks": [
-        { "heading": "Product", "items": [ {"head":"Tagline:","body":" ..."}, ... ] },
+        { "heading": "Product", "items": [
+          {"head":"Tagline:","body":" \"AI for label compliance.\""},
+          {"head":"Pricing:","body":" $19-$249 credit packs", "cite": 1},            // ← cited claim (sources[0])
+          {"head":"Frameworks:","body":" FDA, EU FIC, AAFCO", "cite": [1, 3]}        // ← multi-cite
+        ] },
         { "heading": "Coverage", "items": [...] }
       ],
       "pricingIntro": "Optional intro to pricing table.",

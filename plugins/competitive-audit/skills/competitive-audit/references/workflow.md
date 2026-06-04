@@ -115,6 +115,30 @@ Send all agent calls in a single assistant message so they run concurrently.
 
 Each agent returns a JSON-shaped competitor profile (positioning, frameworks covered, pricing, features, customer proof, threat level, source URLs). Store as `competitor_<name>.json` in the working directory.
 
+## Citations rule (apply during steps 3-7)
+
+Every pricing claim, framework-coverage claim, customer-count claim, and feature claim that came from an external source (a live page or document) **must include a `cite` field** referencing the 1-based source index in `sections.sources[]`.
+
+Examples in data:
+
+```json
+{"head": "Pricing:", "body": " $1,500/mo minimum", "cite": 3}
+{"label": "Frameworks", "value": "FDA, EU FIC, 20+ total", "cite": [3, 4]}
+```
+
+The build template renders `[3]` and `[3,4]` as superscripts in the body. The Sources section auto-numbers entries to match. This makes every claim auditable.
+
+Skip citations for:
+- The client's own homepage facts (it's obvious where they came from)
+- Strategic interpretation/judgment (no external source to cite)
+- A/B/C/D recommendations (these are your synthesis, not facts)
+
+Always cite:
+- Competitor pricing numbers
+- Competitor feature coverage
+- Customer/revenue/market-share figures
+- Any number with units ($X/mo, X%, X scans/mo)
+
 ## Step 6 — Synthesize wins/parity/gaps + recommendations
 
 See `audit-frame.md` for the structure. Three sections per competitor or rolled up:
@@ -139,13 +163,16 @@ Run `references/build_audit.js` with the sections object. Steps:
 4. Validate the produced docx if possible
 5. **Default output location: `~/Downloads/<Client>_Competitive_Audit.docx`** — easy for the user to find. Override only if the user explicitly says "save to ~/Desktop/" or "save in my current directory" or names another path.
 
-The build pattern:
+The build pattern — always produce **both** the full audit and the 2-page exec summary:
 
 ```bash
 cd ~/Downloads
 # (audit_data.json lives in the working dir or a tmp dir)
 node /path/to/build_audit.js audit_data.json ~/Downloads/<Client>_Competitive_Audit.docx
+node /path/to/build_exec_summary.js audit_data.json ~/Downloads/<Client>_ExecSummary.docx
 ```
+
+Both files share the same `audit_data.json`. The exec summary is a 2-page condensed brief for stakeholders who won't read the full audit (founders, CMOs, clients). Always produce both — even if the user didn't ask for the summary explicitly, it's a free output from the same data and saves them the manual condensation step.
 
 If `~/Downloads` doesn't exist or isn't writable (rare), fall back to the user's current working directory and note this in the presentation message.
 
