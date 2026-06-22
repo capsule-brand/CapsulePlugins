@@ -39,6 +39,7 @@ fi
 PLUGIN_DIR="plugins/$PLUGIN"
 PJSON="$PLUGIN_DIR/.claude-plugin/plugin.json"
 MJSON=".claude-plugin/marketplace.json"
+MKT="$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1])).get("name","capsule-plugins"))' "$MJSON" 2>/dev/null || echo capsule-plugins)"
 
 if [[ ! -f "$PJSON" ]]; then
   echo "✗ No plugin.json at $PJSON"; echo "Available plugins:"; list_plugins; exit 1
@@ -109,13 +110,16 @@ else
 fi
 
 if [[ "$DO_UPDATE" == "1" && -n "$CLAUDE" ]]; then
-  "$CLAUDE" plugin marketplace update capsule-plugins >/dev/null 2>&1 || true
-  "$CLAUDE" plugin update "$PLUGIN" || true
-  echo "✔ local install updated (restart Claude to apply)"
+  "$CLAUDE" plugin marketplace update "$MKT" >/dev/null 2>&1 || true
+  if "$CLAUDE" plugin update "$PLUGIN@$MKT"; then
+    echo "✔ local install updated to v$NEWVER (restart Claude to apply)"
+  else
+    echo "⚠ local update didn't apply — run: $CLAUDE plugin update $PLUGIN@$MKT"
+  fi
 fi
 
 echo ""
 echo "✅ Done — $PLUGIN is now v$NEWVER on GitHub (tag: $PLUGIN--v$NEWVER)."
 if [[ "$DO_UPDATE" != "1" ]]; then
-  echo "   Tip: re-run with --update (or 'claude plugin update $PLUGIN') to pull it locally."
+  echo "   Tip: re-run with --update (or 'claude plugin update $PLUGIN@$MKT') to pull it locally."
 fi
