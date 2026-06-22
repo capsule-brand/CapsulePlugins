@@ -1,6 +1,6 @@
 {
   "name": "ebillity-timesheet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Designed by Capsule. Manages time in eBillity TimeTracker by driving Chrome: log hours to a job/day/service item, run a live timer, answer questions about recorded time, check if a week is ready to submit, fix rejected time, and submit or approve only on explicit request. Never types passwords and never submits, approves, or deletes on its own initiative.",
   "author": {
     "name": "Capsule",
