@@ -34,7 +34,7 @@
       "name": "ebillity-timesheet",
       "source": "./plugins/ebillity-timesheet",
       "description": "Designed by Capsule. Manages time in eBillity TimeTracker by driving Chrome: log hours to a job/day/service item, run a live timer, answer questions about recorded time, check if a week is ready to submit, fix rejected time, and submit or approve only on explicit request. Never types passwords and never submits, approves, or deletes on its own initiative.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": {
         "name": "Capsule",
         "url": "https://clearancelab.ai"
