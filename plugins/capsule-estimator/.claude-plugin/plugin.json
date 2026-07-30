@@ -1,0 +1,21 @@
+{
+  "name": "capsule-estimator",
+  "version": "0.1.0",
+  "description": "Designed by Capsule. Turns a proposal scope into a grounded, range-based estimate — hours and price by discipline — built from Capsule's own signed history (the Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion). Cites the nearest comparable past jobs, carries a confidence label on every number, and applies Capsule's win-rate guardrails (the $50K line, the 3-discipline rule). Needs the Notion connector.",
+  "author": {
+    "name": "Capsule",
+    "url": "https://clearancelab.ai"
+  },
+  "keywords": [
+    "estimate",
+    "proposal",
+    "pricing",
+    "scope",
+    "hours",
+    "cost estimate",
+    "sow",
+    "agency",
+    "notion",
+    "estimating"
+  ]
+}
