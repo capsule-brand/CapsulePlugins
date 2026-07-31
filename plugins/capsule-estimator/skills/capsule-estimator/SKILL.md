@@ -7,11 +7,11 @@ description: >-
   label design, marketing materials, etc.). Triggers on: "estimate this proposal", "scope this",
   "how much should we quote for X", "what does a logo/packaging/website usually cost or take",
   "build an estimate", "estimate hours for", "price out this scope", "put together a cost estimate",
-  "make it proposal-ready", "put this in our proposal/deck format",
+  "make it proposal-ready", "put this in our proposal/deck format", "they have $X to work with",
   "how many hours is a [discipline]", or preparing a response-and-cost-estimate / SOW for a prospect.
   Reads the live Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion.
 metadata:
-  version: 1.2.0
+  version: 1.3.0
   updated: 2026-07-31
   rate_card:
     current: 250        # USD/hr, effective 2025-01-01+
@@ -31,10 +31,11 @@ Produce a **grounded, range-based, provenance-carrying** estimate for a Capsule 
 5. **Quote from the median, not the range midpoint.** The range includes outliers both ways.
 6. **Capsule data sets the quote — outside data never does.** The web can only ever be a *sanity check* on thin / first-of-kind disciplines (Step 4b), shown as a clearly-labeled market reference. It is never averaged into a benchmark, never carries provenance weight, and never becomes the quoted number.
 7. **Discovery is a phase, not an afterthought.** Almost every Capsule proposal opens with a Download & Discovery phase — pick its tier from project type + budget (see "Discovery tiers"). The exceptions are pure production/hourly jobs and pure dev builds.
+8. **Show the whole picture, not just the fee.** Every estimate also states a **timeline** (weeks, with concurrency) and flags **pass-through / OOP costs** (production, print, prototypes, photography, video, travel, third-party research) as separate "at net" lines. A fee mistaken for the client's total spend erodes trust.
 
 ## Data sources (all live in Notion — query, don't hardcode)
 
-- **Proposals Index** (proposal-grain: quoted $/hours, Won/Lost, comparables) — data source `collection://c4c426f1-19e3-4f3d-a9d1-661ff7170826`
+- **Proposals Index** (proposal-grain: quoted $/hours, Won/Lost, comparables, `Lead Source`, `Industry`) — data source `collection://c4c426f1-19e3-4f3d-a9d1-661ff7170826`
 - **Capsule Projects** (phase-grain: actual `Hours Logged`, `Discipline`, `Status`) — data source `collection://908fc4e3-07a7-44af-bfeb-bc27aecc2a14`
 - **Pricing Reference** (computed cost/price medians by discipline, the $50K cliff analysis) — page `https://app.notion.com/p/3aa790e0e71a81c78f19e362dd7d03a6`
 - **Discipline Hours Benchmark** (computed hours medians by discipline) — page `https://app.notion.com/p/3ad790e0e71a81b0a0a3e2464907a05f`
@@ -70,9 +71,11 @@ Prefer rows with `Data Verified = true`.
 
 **4b. External sanity band — thin / novel only, quarantined.** Trigger ONLY when, after widening, a priced discipline is still **thin (n<3 signed comps)** or **first-of-kind** (scope Capsule has never done). Then run one `WebSearch` for a market range ("[discipline] design agency pricing", and similar) purely to sanity-check the internal number. Hard rules: (a) show it as a separate **"External market reference (not Capsule data)"** line, never inside the estimate table; (b) never average it into any median or into the quote; (c) use it only to flag *"the internal figure sits well outside the market — re-examine"*, not to move the quote; (d) if the internal number sits inside the band, say so and move on. If the discipline is **not** thin, skip this entirely — outside data on a well-sampled discipline is pure noise and violates golden rule 6.
 
-**5. Build the line items.** Per discipline: hours range → cost at the current rate ($250/hr), cross-checked against the won-price median. Reconcile if hours×rate and the price median disagree by >25% (flag which you're trusting and why).
+**5. Build the line items.** Per discipline: hours range → cost at the current rate ($250/hr), cross-checked against the won-price median. Reconcile if hours×rate and the price median disagree by >25% (flag which you're trusting and why). Then, for each phase: (a) derive a **timeline in weeks** (see "Timeline"); (b) flag any **pass-through / OOP** the scope implies (see "Pass-through / OOP costs").
 
-**6. Total, then apply guardrails.**
+**6. Total, then apply guardrails and win-strategy.** Total the fee, the **timeline** (critical path with concurrency — not the sum), and the **OOP** separately. Apply the guardrails and the win-strategy read.
+
+**6b. If the client stated a budget, run budget-fit** (see "Budget-fit").
 
 ## Discovery tiers (almost every proposal opens here)
 
@@ -85,21 +88,60 @@ Recommend the tier that fits the project type and budget, **name it, say why you
 
 **Selection rule:** bigger / higher-budget / higher-stakes → fuller discovery; client brings research → review-only; single-SKU or pure production → abbreviated or none. Tie it to the $50K line — a lean discovery keeps Phase 1 small and the deal in the 77–97% win band. A Phase 1 discovery/audit also de-risks pricing the later phases, which is why those are quoted as ranges until it completes.
 
-## Guardrails (from the Pricing Reference — state these when they trigger)
+## Timeline (weeks, not just hours)
+
+Every estimate states a timeline — hours alone don't tell a client when they'll have it. Convert each phase's hours to **calendar weeks** (phases run part-time and often in parallel, so weeks ≠ hours ÷ 40):
+
+- **Discovery** by tier: review-their-research ~3 wks · abbreviated 1–3 wks · full/large 6–12 wks · packaging audit 1–2 wks.
+- **A design / build phase:** ~3–4 wks typical (a single-SKU packaging design ran 4 wks; a mid discipline 3–4). Small phases (≤~40h) 1–2 wks; large (~80h+) 4–6 wks.
+- **Strategy / messaging** ~4 wks · **Brand Guidelines** ~3–5 wks · **Website build (partner/dev)** TBD by vendor.
+- Prefer a **nearest comparable's known duration** where the deck stated one; otherwise use these anchors.
+
+**Total Timeline = the critical path, not the sum.** Phases that can run concurrently (mark `**`) overlap and don't add — discovery leads, then design / POP / production often run in parallel. State weeks per phase and one total.
+
+## Pass-through / OOP costs (never inside the fee)
+
+Detect and separate any cost that isn't Capsule's labor, so the fee is never mistaken for the client's total spend. Common triggers + anchors:
+
+- **Photography / video production** — often the biggest single cost: a full brand shoot runs **$45k–$85k+**; passed through at net.
+- **Printing / production / physical prototypes** — vendor-quoted, "to be estimated," at net.
+- **Third-party research fielding** (surveys / panels) — inside the full-discovery research block, at net.
+- **Trademark search / clearance** — ~**$2,500 per name** (comprehensive, by an IP attorney) on naming work.
+- **Travel** — excluded from fee; expenses carry a **20% markup** on some contracts.
+
+Show these as their own lines labeled **"pass-through / OOP — at net,"** and state plainly that the fee is Capsule's work only.
+
+## Guardrails & win strategy (from the Pricing Reference — state these when they trigger)
 
 - **The $50K line.** Win rate roughly halves above $50K (77–97% below, ~33% above). If the total crosses $50K, say so and propose a Phase 1 that lands under $50K with a defined path to the rest.
 - **The 3-discipline rule.** 1–2 disciplines win 66–80%; 3+ win ~33% regardless of price. If the scope bundles 3+, recommend phasing or a single-discipline entry point.
 - **Packaging is the strength** (65% win rate) — scope can be pushed harder here. **Website is the weak spot** (39%) — price tighter.
 - **Cap revision rounds** in every estimate (default: 2 included, additional billed) so a fixed price doesn't become unlimited revisions.
 
+**Win strategy — use the data actively, beyond the two cliffs:**
+
+- **State the win-rate band for the total.** Under $10K ≈ **97%** · $10–50K ≈ **77%** · $50–100K ≈ **33%** · $100K+ ≈ **32%**. Name the band the quote lands in, so the number carries its odds.
+- **Factor lead source.** Win rate varies sharply by how the deal came in — repeat clients and referrals win far more than cold RFP / outbound. When the lead source is known, compute it live and factor it: a repeat client can carry more scope/price; a cold RFP should be scoped tighter and lean on a paid Phase-1 gate. Query: `SELECT "Lead Source","Proposal Outcome", COUNT(*) FROM "collection://c4c426f1-19e3-4f3d-a9d1-661ff7170826" GROUP BY "Lead Source","Proposal Outcome";`
+- **Recommend the paid Phase-1 gate for big deals.** For large or multi-phase scopes, land a small **paid discovery / audit** (under $50K) that de-risks pricing the rest, then quote Phases 2–4 as ranges to be confirmed after it — exactly how ACG and Buck were structured. This moves the deal into the 77–97% band and preserves the full programme.
+
+## Budget-fit (when the client names a number)
+
+When the client states a budget, don't just compare it to the median — reconcile it in three parts:
+
+1. **What fits the budget** — an honest scope that lands at or under their number (often a single priority discipline, or a focused first phase).
+2. **What you'd recommend** — the scope the data says the job actually needs, and why.
+3. **The gap + the path** — the difference, and how to phase to their budget now with a defined route to the rest (a paid Phase 1, or the priority line first).
+
+Frame a stated budget as an **anchor, not a ceiling** — e.g. Senda's $5k is a packaging anchor; the data says a full single-SKU packaging design is ~$15k. Never silently pad the scope to spend the budget, or gut the scope to hit it — show the tradeoff and let the client choose.
+
 ## Output format
 
 Return, in this order:
 
 1. **Scope read** — the disciplines + tier you parsed (confirm assumptions), and the recommended discovery tier + why.
-2. **Estimate table** — one row per discipline: Discipline · Hours (range) · Cost (range) · Confidence · nearest comparable.
-3. **Total** — hours and $ range, with the phased structure if a guardrail tripped.
-4. **Recommendation** — the number to quote, why, revision cap, and any phasing.
+2. **Estimate table** — one row per discipline: Discipline · Hours (range) · Cost (range) · Timeline (wks) · Confidence · nearest comparable.
+3. **Total** — hours, $ range, and **Total Timeline** (critical path with concurrency); list any **pass-through / OOP** as separate "at net" lines; phased structure if a guardrail tripped.
+4. **Recommendation** — the number to quote, the **win-rate band** it lands in (and lead-source read if known), revision cap, any phasing / paid Phase-1 gate, and — if the client named a budget — the **budget-fit** reconciliation.
 5. **Provenance footer** — data sources, snapshot date, methodology version, and rate used.
 
 *When Step 4b fired, add a separate **External market reference** note beneath the table — clearly labeled as outside data, kept out of the totals, and used only to say whether the Capsule-grounded number sits inside or outside the market band. If 4b did not fire, do not mention it.*
@@ -133,7 +175,7 @@ A future addition will let this skill fill the copy **directly into a proposal d
 ## Configuration & versioning
 
 - **Rate:** $250/hr (current, effective 2025-01-01). Rows before 2025 were $200/hr — normalize historical hours to the current rate for forward estimates. Rate is a parameter; update it in this skill's `metadata.rate_card` when it changes and bump the version.
-- **Methodology version:** stamp each estimate with `v1.2.0 (2026-07-31)` so old estimates stay interpretable after the method evolves.
+- **Methodology version:** stamp each estimate with `v1.3.0 (2026-07-31)` so old estimates stay interpretable after the method evolves.
 - **Taxonomy** must match the index `Category` and projects `Discipline` exactly — never introduce a new discipline name here without adding it in both databases.
 
 ## Honest limitations (say these when relevant)
@@ -142,13 +184,14 @@ A future addition will let this skill fill the copy **directly into a proposal d
 - The cost column is **proposal-grain**; bundled proposals don't split price by discipline, so per-discipline *variance* is cleanest on single-discipline jobs.
 - Dead (Neverland/Canceled) phases and unresolved status-conflict rows are excluded from benchmarks.
 - The optional **external market reference** (Step 4b) is uncalibrated to Capsule's rate, region, and client mix — it is a smoke detector for thin / first-of-kind disciplines, never a source for the quote.
-- **Discovery-tier anchors** come from a hand-read sample of recent proposal decks, not the live index — treat them as calibration and adjust to the specific project; they'll firm up as discovery phases are tagged in the data.
+- **Discovery-tier and timeline anchors** come from a hand-read sample of recent proposal decks, not the live index — treat them as calibration and adjust to the specific project; they'll firm up as discovery phases and durations are tagged in the data.
 
 ## Worked example — "Senda: premium sock packaging + in-store POP display"
 
 1. **Scope read:** two disciplines — Packaging (T2, single premium retail SKU, production-ready files + one physical prototype) and Marketing Materials / POP (a display concept + render + copy). Priced separately per the brief. Discovery tier: **abbreviated (~$2,500 / 1 wk)** — single-SKU packaging, no research to commission.
-2. **Packaging:** comparables = CUR-120 Dark Heart Bag & Box ($17.25–19.25k, 69–77h), CUR-123 JAMS Dram ($13.75–15.75k, 55–63h), AMP-049 Deli Loaf ($14.75–24k, 59–96h). Benchmark: Packaging won median $18,250; hours thin (n=1 completed) → use quoted range 55–77h for a full design. Estimate: **~$14–18k, ~55–75h.**
-3. **POP display:** Marketing Materials won median ~$5.4k, but a concept + full render is larger; nearest render comps run higher. Estimate: **~$6–12k**, quoted as its own line.
-4. **Guardrails:** total ~$20–30k, under $50K and 2 disciplines → healthy win zone; no phasing forced. Packaging is Capsule's strong discipline — push scope confidently. Cap at 2 revision rounds.
-5. **Recommendation:** quote packaging at ~$15k (priority line), POP separately at ~$5–6k lean concept or ~$10k full render, revision cap noted. Client's stated $5k is a packaging anchor, not the ceiling — the data says a full single-SKU packaging design is a ~$15k / ~65h job.
-6. **Proposal-ready (on request):** Roadmap → `01 · Download & Discovery — $2,500 · 1 wk`, `02 · Packaging Design — $15,000 · 4 wks`, `03 · In-Store POP Display — $6,000 · 3 wks **`, **Total Investment ~$23,500 · ~5 wks** (POP runs parallel). Each phase gets APPROACH / DELIVERABLES / INVESTMENT; physical prototype + printing noted as OOP at net; 2 refinement rounds baked in.
+2. **Packaging:** comparables = CUR-120 Dark Heart Bag & Box ($17.25–19.25k, 69–77h), CUR-123 JAMS Dram ($13.75–15.75k, 55–63h), AMP-049 Deli Loaf ($14.75–24k, 59–96h). Benchmark: Packaging won median $18,250; hours thin (n=1 completed) → use quoted range 55–77h for a full design. Estimate: **~$14–18k, ~55–75h, ~4 wks.**
+3. **POP display:** Marketing Materials won median ~$5.4k, but a concept + full render is larger; nearest render comps run higher. Estimate: **~$6–12k, ~3 wks** (runs parallel with packaging), quoted as its own line.
+4. **Timeline + OOP:** Total Timeline ~5 wks (1 wk discovery + 4 wks design; POP concurrent). **Pass-through / OOP — at net:** physical prototype + factory printing, vendor-quoted, not in the fee.
+5. **Guardrails + win strategy:** total ~$23–25k → **$10–50K band, ~77% historical win rate**; under $50K and 2 disciplines → healthy zone, no forced phasing. Packaging is Capsule's strong discipline — push scope confidently. Cap at 2 revision rounds.
+6. **Budget-fit:** client stated $5k. *Fits budget:* a focused $7,500 packaging first phase (one concept to final, production files, digital prototype). *Recommended:* full single-SKU packaging ~$15k + POP ~$6–8k. *Gap + path:* $5k is a packaging anchor, not the ceiling — the data says a full design is ~$15k / ~65h; lead with the priority packaging line, POP as a parallel add.
+7. **Proposal-ready (on request):** Roadmap → `01 · Download & Discovery — $2,500 · 1 wk`, `02 · Packaging Design — $15,000 · 4 wks`, `03 · In-Store POP Display — $8,000 · 3 wks **`, **Total Investment ~$25,500 · ~5 wks** (POP parallel). Each phase gets APPROACH / DELIVERABLES / INVESTMENT; prototype + printing noted as OOP at net; 2 refinement rounds baked in.
