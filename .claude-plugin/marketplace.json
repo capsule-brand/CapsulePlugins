@@ -72,6 +72,17 @@
         "notion",
         "estimating"
       ]
+    },
+    {
+      "name": "ship-plugin",
+      "source": "./plugins/ship-plugin",
+      "description": "Designed by Capsule. Ship a Capsule skill as a Claude Code plugin in one step — scaffold it, version it, publish it to the capsule-plugins marketplace, and install it on both Macs. Use when the user says \"make this a plugin\", \"ship this skill\", \"publish this as a plugin\", \"release the <name> plugin\", \"add <name> to the marketplace\", or wants a SKILL.md turned into an installed, synced plugin. Runs from ~/CapsulePlugins using add-plugin.sh, release.sh, and the claude plugin CLI (needs shell access + SSH to the Mac Studio).",
+      "version": "0.1.0",
+      "author": {
+        "name": "Capsule",
+        "url": "https://clearancelab.ai"
+      },
+      "keywords": []
     }
   ]
 }
