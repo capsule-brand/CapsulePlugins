@@ -1,0 +1,10 @@
+{
+  "name": "colorproof",
+  "version": "0.1.0",
+  "description": "Designed by Capsule. Proof and correct brand colors across Adobe Illustrator artwork and its exported formats. Use whenever the user wants to check, audit, verify, proof, or \"QC\" colors against known brand values (Pantone/PMS names, CMYK builds, or HEX), and optionally fix what's off — at the scale of a single folder OR an entire multi-format logo package (.ai, vector .pdf, .svg, plus re-rendered .jpg/.png). Trigger on things like \"check these files against our brand colors\", \"proof this logo package\", \"make the orange Pantone 3564 C everywhere\", \"swap the purple to 7683 C across the package\", \"do the colors in this folder match these numbers\", or when the user pastes brand values / a spec-sheet image and points at a folder. Also handles Pantone-to-Pantone spot remaps, pulling the real Lab formula from the Pantone book on the machine. Use it for any brand-color checking or correction of Illustrator artwork, ",
+  "author": {
+    "name": "Capsule",
+    "url": "https://clearancelab.ai"
+  },
+  "keywords": []
+}

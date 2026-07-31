@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ColorProof &middot; Fix</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--line:#262b36;--txt:#e6e8ec;--mut:#9aa0a6;--accent:#c93837}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:32px 24px 64px}
+header{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+h1{font-size:22px;margin:0;letter-spacing:.3px}
+.badge{font-size:12px;text-transform:uppercase;letter-spacing:.08em;background:var(--accent);color:#fff;padding:3px 9px;border-radius:999px}
+.meta{color:var(--mut);font-size:13px;margin-left:auto;text-align:right}
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0 20px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;min-width:88px}
+.stat .num{font-size:24px;font-weight:600}.stat .lbl{color:var(--mut);font-size:12px;margin-top:2px}
+h2{font-size:15px;margin:28px 0 10px;color:var(--txt)}h2 .sub{color:var(--mut);font-weight:400;font-size:13px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);font-size:14px}
+th{color:var(--mut);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+tr:last-child td{border-bottom:none}
+.chip{display:inline-block;width:22px;height:22px;border-radius:6px;border:1px solid rgba(255,255,255,.18);vertical-align:middle}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}.mut{color:var(--mut);font-size:12px}
+.b{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+.b.ok{background:rgba(95,208,138,.15);color:#5fd08a}.b.no{background:rgba(255,107,107,.15);color:#ff6b6b}.b.nu{background:rgba(154,160,166,.15);color:#9aa0a6}
+.good{color:#5fd08a}.bad{color:#ff6b6b}
+.banner{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:12px 16px;margin:0 0 20px;font-size:13px;color:var(--mut)}
+.banner code,.banner b{color:var(--txt)}
+footer{color:var(--mut);font-size:12px;margin-top:32px;border-top:1px solid var(--line);padding-top:16px}
+</style></head><body><div class="wrap">
+<header><h1>ColorProof</h1><span class="badge">Fix</span><span class="meta">/Users/brianadducci/Desktop/ColorProof TEST - Vertical Registered<br>Sat Jun 13 2026 19:04:15 GMT-0500</span></header>
+<div class="stats"><div class="stat"><div class="num">2</div><div class="lbl">.ai changed</div></div><div class="stat"><div class="num">39</div><div class="lbl">instances</div></div><div class="stat"><div class="num">2</div><div class="lbl">.pdf</div></div><div class="stat"><div class="num">0</div><div class="lbl">.svg</div></div><div class="stat"><div class="num">0</div><div class="lbl">.jpg</div></div><div class="stat"><div class="num">0</div><div class="lbl">.png</div></div></div><div class="banner">Backup snapshot &rarr; <code>test copy on Desktop (originals untouched)</code></div><h2>.ai edits</h2><table><thead><tr><th>File</th><th>Swaps</th><th>Instances</th><th>Removed swatches</th></tr></thead><tbody><tr><td class="mono">APR_v_r_bw_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_fullcolor_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_fullcolor_pms.ai</td><td>Purple PMS 2105 C to 7683 C</td><td>13</td><td class="mono">PANTONE 2105 C</td></tr><tr><td class="mono">APR_v_r_inv_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_inv_pms.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_orange_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_orange_pms.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_purple_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr><tr><td class="mono">APR_v_r_purple_pms.ai</td><td>Purple PMS 2105 C to 7683 C</td><td>26</td><td class="mono">PANTONE 2105 C</td></tr><tr><td class="mono">APR_v_r_rev_cmyk.ai</td><td>no changes</td><td>0</td><td class="mono"></td></tr></tbody></table><h2>.pdf re-exported</h2><table><thead><tr><th>File</th><th>Mode</th><th>Status</th></tr></thead><tbody><tr><td class="mono">APR_v_r_fullcolor_pms.ai</td><td> spot</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_purple_pms.ai</td><td> spot</td><td class="good">ok</td></tr></tbody></table><h2>.svg swapped</h2><table><thead><tr><th>File</th><th>Replacements</th><th>Status</th></tr></thead><tbody><tr><td class="mono">APR_v_r_bw_rgb.svg</td><td>0</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_fullcolor_rgb.svg</td><td>0</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_inv_rgb.svg</td><td>0</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_orange_rgb.svg</td><td>0</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_purple_rgb.svg</td><td>0</td><td class="good">ok</td></tr><tr><td class="mono">APR_v_r_rev_rgb.svg</td><td>0</td><td class="good">ok</td></tr></tbody></table>
+<footer>Read-only proof makes no changes. Fixes edit only the colors you swap; originals are snapshotted to the backup home first.</footer>
+</div></body></html>
