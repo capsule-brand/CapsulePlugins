@@ -8,10 +8,11 @@ description: >-
   "how much should we quote for X", "what does a logo/packaging/website usually cost or take",
   "build an estimate", "estimate hours for", "price out this scope", "put together a cost estimate",
   "make it proposal-ready", "put this in our proposal/deck format", "they have $X to work with",
+  "review this RFP", "should we respond to this RFP", "here's an RFP / brief", "go/no-go on this pitch",
   "how many hours is a [discipline]", or preparing a response-and-cost-estimate / SOW for a prospect.
   Reads the live Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion.
 metadata:
-  version: 1.3.0
+  version: 1.4.0
   updated: 2026-07-31
   rate_card:
     current: 250        # USD/hr, effective 2025-01-01+
@@ -32,6 +33,7 @@ Produce a **grounded, range-based, provenance-carrying** estimate for a Capsule 
 6. **Capsule data sets the quote — outside data never does.** The web can only ever be a *sanity check* on thin / first-of-kind disciplines (Step 4b), shown as a clearly-labeled market reference. It is never averaged into a benchmark, never carries provenance weight, and never becomes the quoted number.
 7. **Discovery is a phase, not an afterthought.** Almost every Capsule proposal opens with a Download & Discovery phase — pick its tier from project type + budget (see "Discovery tiers"). The exceptions are pure production/hourly jobs and pure dev builds.
 8. **Show the whole picture, not just the fee.** Every estimate also states a **timeline** (weeks, with concurrency) and flags **pass-through / OOP costs** (production, print, prototypes, photography, video, travel, third-party research) as separate "at net" lines. A fee mistaken for the client's total spend erodes trust.
+9. **Qualify RFPs before you invest.** RFP/pitch is historically Capsule's lowest-win channel (~1 in 8, vs ~9 in 10 for repeat clients). When the input is an RFP, run the go/no-go qualification first (see "RFP / brief intake") — a well-reasoned decline is often the best outcome.
 
 ## Data sources (all live in Notion — query, don't hardcode)
 
@@ -43,6 +45,8 @@ Produce a **grounded, range-based, provenance-carrying** estimate for a Capsule 
 Use `notion-query-data-sources` (SQL) for the two databases and `notion-fetch` for the two reference pages. If the Notion connector isn't available, say so and fall back to the last-known benchmark values, clearly flagged as stale.
 
 ## Method
+
+**0. RFP / brief intake (conditional).** If the input is a pasted RFP, creative brief, or scoping document — rather than an already-clear "scope X" ask — run the **RFP / brief intake** first (extract → qualify → mirror → flag conflicts), then feed its extracted scope, budget, and deadline into the steps below. See the "RFP / brief intake" section.
 
 **1. Parse the scope into disciplines + tier.** Map every deliverable to the controlled taxonomy: Label Design, Packaging, Branding, Website, Naming, Strategy, Photography, Production Update, Identity System, Print Collateral, Brand Guidelines, Color Correction, Video, Marketing Materials, Hourly/Misc, Other. Estimate scope tier (T1 small / T2 mid / T3 full) from the ask.
 
@@ -76,6 +80,34 @@ Prefer rows with `Data Verified = true`.
 **6. Total, then apply guardrails and win-strategy.** Total the fee, the **timeline** (critical path with concurrency — not the sum), and the **OOP** separately. Apply the guardrails and the win-strategy read.
 
 **6b. If the client stated a budget, run budget-fit** (see "Budget-fit").
+
+## RFP / brief intake (when the input is a pasted RFP, brief, or scoping doc)
+
+**Detect it.** If the user pastes or drops in an RFP, creative brief, or scoping document (vs. an already-clear "scope X" ask), run this intake, then feed the result into the estimate. Real RFPs are usually prose "creative briefs," not structured forms — the load-bearing facts (budget, the hard KPI, the deadline) are often buried mid-sentence and late in the doc, so read the whole thing before extracting.
+
+**1. Extract the schema.** Pull each field, quote where possible, and **flag any that's missing** (a gap is itself a signal):
+- **Commercial:** client + brand(s); **budget** (and whether it "includes production" — often buried late/mid-sentence); **hard KPI / success target** (e.g. "+25k units," buried in a goals bullet); contract / IP / usage-rights terms.
+- **Process:** submission deadline + Q&A window; decision / award date + any shortlist / pitch dates; submission format / page limits / required sections; **mandatory requirements** (certs, minimums — non-compliance can auto-disqualify).
+- **Strategic:** the ask in one line; stated goals; **evaluation criteria + weights** (the single most important field — they dictate positioning and where to spend effort); client-stated brand pillars & suggested creative territories; target audience (often thin/absent — flag); constraints (mobile-first, product-as-hero, localization/languages, diversity); incumbent / competitors / number of bidders (usually omitted — flag).
+- **Deliverables:** itemize the asset mix + specs (video durations, channels, aspect ratios, photography, retail/POP, email, style guide), localization, usage rights, and calendar/seasonal moments — this is what feeds the scope and estimate.
+
+**2. Qualify — go/no-go FIRST (the highest-value step).** RFP/pitch is historically Capsule's **lowest-win channel: ~12% (1 win of 8)**, vs ~87% repeat clients, ~43% network, ~32% inbound, ~21% referral. So the default posture on a cold RFP is *qualify hard before investing.* Score the fit:
+- (a) **Do the evaluation criteria reward Capsule's strengths?** An explicit invitation to "challenge the sea of sameness" rewards Capsule's disruptor positioning; criteria weighted to safe / incumbent-style work do not.
+- (b) **Prior relationship?** A cold RFP (the odds above) vs. an existing contact with the decision-makers.
+- (c) **Budget** disclosed, real, and above cost?
+- (d) **Timeline** realistic for the scope?
+- (e) Can Capsule deliver **~70%+** of the mandatory scope without scrambling?
+- (f) **Red flags:** wired for an incumbent (requirements mirror one vendor's features / proprietary terms), cattle-call (too many bidders), "free ideas" fishing (speculative creative with no real intent), unacceptable IP/liability terms, no budget.
+
+Output a clear call — **pursue / pursue-with-caution / qualify-more / decline** — with the reasons. A well-reasoned decline is a legitimate, often correct outcome.
+
+**3. Mirror & translate.** Echo the extracted signals back in plain language (*"Here's what we heard…"* — Capsule's signature move), and for each key requirement/finding write its **implication** — the one-line "what the client is really asking us to fix." (Capsule's internal RFP docs put an "RFP NOTE" beside every point; that translation is the heart of the method.)
+
+**4. Flag conflicts & gaps.** Surface where the RFP fights reality: **deadline vs the timeline the scope needs** ("their 3-wk decision date is tighter than the ~5 wks this scope needs"), **budget vs what the scope needs**, missing audience / metrics / incumbent (mark **agency-supplied** — Capsule builds these itself, and doing so doubles as proof of expertise), and any mandatory requirement that must be met to avoid auto-DQ.
+
+**5. Feed into the estimate.** Map the extracted deliverables → disciplines + tier (Step 1); budget → budget-fit; deadline → the timeline check; then run the normal engine (discovery tier, benchmarks, guardrails, win-strategy, OOP). On a big RFP, the lead-source odds make the **paid Phase-1 gate** especially valuable.
+
+**6. Questions-for-client + response guidance.** Produce a short **"Questions for [client]"** list, each with Capsule's rationale and a recommended answer — never finalize price before these resolve. When helping draft the response itself, apply the win-drivers: **answer the evaluation criteria in their weighted order**, open with the client's problem (not Capsule's history), offer a real point of view (don't restate the brief), thread 3–5 win themes tied to their priorities, prove with named case studies + real numbers, name the actual delivery team, present pricing as a phased business case, make commitments measurable, and comply exactly with format / page limits.
 
 ## Discovery tiers (almost every proposal opens here)
 
@@ -121,7 +153,7 @@ Show these as their own lines labeled **"pass-through / OOP — at net,"** and s
 **Win strategy — use the data actively, beyond the two cliffs:**
 
 - **State the win-rate band for the total.** Under $10K ≈ **97%** · $10–50K ≈ **77%** · $50–100K ≈ **33%** · $100K+ ≈ **32%**. Name the band the quote lands in, so the number carries its odds.
-- **Factor lead source.** Win rate varies sharply by how the deal came in — repeat clients and referrals win far more than cold RFP / outbound. When the lead source is known, compute it live and factor it: a repeat client can carry more scope/price; a cold RFP should be scoped tighter and lean on a paid Phase-1 gate. Query: `SELECT "Lead Source","Proposal Outcome", COUNT(*) FROM "collection://c4c426f1-19e3-4f3d-a9d1-661ff7170826" GROUP BY "Lead Source","Proposal Outcome";`
+- **Factor lead source (real win rates from the index).** How the deal came in predicts the outcome more than price does: **Repeat Client ~87%** (n=98, won median ~$25k) · **Network/Personal ~43%** · **Inbound ~32%** · **Referral ~21%** · **RFP/Pitch ~12%** (1 of 8). Repeat clients win big at smaller sizes; cold RFPs and large referrals/inbound mostly lose (they bring the >$50K work). Factor it: a repeat client can carry more scope/price; a cold RFP should be qualified hard (see "RFP / brief intake") and, if pursued, scoped tight and gated with a paid Phase 1. Recompute live: `SELECT "Lead Source","Proposal Outcome", COUNT(*) FROM "collection://c4c426f1-19e3-4f3d-a9d1-661ff7170826" GROUP BY 1,2;`
 - **Recommend the paid Phase-1 gate for big deals.** For large or multi-phase scopes, land a small **paid discovery / audit** (under $50K) that de-risks pricing the rest, then quote Phases 2–4 as ranges to be confirmed after it — exactly how ACG and Buck were structured. This moves the deal into the 77–97% band and preserves the full programme.
 
 ## Budget-fit (when the client names a number)
@@ -138,7 +170,7 @@ Frame a stated budget as an **anchor, not a ceiling** — e.g. Senda's $5k is a 
 
 Return, in this order:
 
-1. **Scope read** — the disciplines + tier you parsed (confirm assumptions), and the recommended discovery tier + why.
+1. **Scope read** — the disciplines + tier you parsed (confirm assumptions), and the recommended discovery tier + why. *(If an RFP intake ran, lead with its extract + go/no-go call.)*
 2. **Estimate table** — one row per discipline: Discipline · Hours (range) · Cost (range) · Timeline (wks) · Confidence · nearest comparable.
 3. **Total** — hours, $ range, and **Total Timeline** (critical path with concurrency); list any **pass-through / OOP** as separate "at net" lines; phased structure if a guardrail tripped.
 4. **Recommendation** — the number to quote, the **win-rate band** it lands in (and lead-source read if known), revision cap, any phasing / paid Phase-1 gate, and — if the client named a budget — the **budget-fit** reconciliation.
@@ -175,7 +207,7 @@ A future addition will let this skill fill the copy **directly into a proposal d
 ## Configuration & versioning
 
 - **Rate:** $250/hr (current, effective 2025-01-01). Rows before 2025 were $200/hr — normalize historical hours to the current rate for forward estimates. Rate is a parameter; update it in this skill's `metadata.rate_card` when it changes and bump the version.
-- **Methodology version:** stamp each estimate with `v1.3.0 (2026-07-31)` so old estimates stay interpretable after the method evolves.
+- **Methodology version:** stamp each estimate with `v1.4.0 (2026-07-31)` so old estimates stay interpretable after the method evolves.
 - **Taxonomy** must match the index `Category` and projects `Discipline` exactly — never introduce a new discipline name here without adding it in both databases.
 
 ## Honest limitations (say these when relevant)
@@ -185,10 +217,11 @@ A future addition will let this skill fill the copy **directly into a proposal d
 - Dead (Neverland/Canceled) phases and unresolved status-conflict rows are excluded from benchmarks.
 - The optional **external market reference** (Step 4b) is uncalibrated to Capsule's rate, region, and client mix — it is a smoke detector for thin / first-of-kind disciplines, never a source for the quote.
 - **Discovery-tier and timeline anchors** come from a hand-read sample of recent proposal decks, not the live index — treat them as calibration and adjust to the specific project; they'll firm up as discovery phases and durations are tagged in the data.
+- **Lead-source / RFP win rates** are a point-in-time computation from the index (RFP/Pitch is small-n — 8 rows); recompute live and treat small-n channels as directional, not precise.
 
 ## Worked example — "Senda: premium sock packaging + in-store POP display"
 
-1. **Scope read:** two disciplines — Packaging (T2, single premium retail SKU, production-ready files + one physical prototype) and Marketing Materials / POP (a display concept + render + copy). Priced separately per the brief. Discovery tier: **abbreviated (~$2,500 / 1 wk)** — single-SKU packaging, no research to commission.
+1. **Scope read:** two disciplines — Packaging (T2, single premium retail SKU, production-ready files + one physical prototype) and Marketing Materials / POP (a display concept + render + copy). Priced separately per the brief. Discovery tier: **abbreviated (~$2,500 / 1 wk)** — single-SKU packaging, no research to commission. *(If Senda had arrived as an RFP, intake would run first — extract budget/deadline/deliverables, qualify go/no-go, mirror + flag — before this scope read.)*
 2. **Packaging:** comparables = CUR-120 Dark Heart Bag & Box ($17.25–19.25k, 69–77h), CUR-123 JAMS Dram ($13.75–15.75k, 55–63h), AMP-049 Deli Loaf ($14.75–24k, 59–96h). Benchmark: Packaging won median $18,250; hours thin (n=1 completed) → use quoted range 55–77h for a full design. Estimate: **~$14–18k, ~55–75h, ~4 wks.**
 3. **POP display:** Marketing Materials won median ~$5.4k, but a concept + full render is larger; nearest render comps run higher. Estimate: **~$6–12k, ~3 wks** (runs parallel with packaging), quoted as its own line.
 4. **Timeline + OOP:** Total Timeline ~5 wks (1 wk discovery + 4 wks design; POP concurrent). **Pass-through / OOP — at net:** physical prototype + factory printing, vendor-quoted, not in the fee.
