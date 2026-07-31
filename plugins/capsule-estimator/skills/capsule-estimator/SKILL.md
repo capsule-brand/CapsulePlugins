@@ -126,6 +126,10 @@ Conventions (match these exactly — they're how every Capsule deck reads):
 
 Keep every number exactly as the estimate produced it. If the estimate tripped a guardrail (>$50K or 3+ disciplines), the proposal-ready roadmap is where the phasing shows up naturally.
 
+### Planned (not yet built) — write the copy into the document
+
+A future addition will let this skill fill the copy **directly into a proposal document** instead of only emitting paste-ready text. Intended approach: a one-time **Google Slides token template** (the branded proposal deck with `{{tokens}}` like `{{discovery_investment}}`, `{{packaging_approach}}`, `{{total_investment}}`); the skill produces a **token→value fill-map** and a fill step stamps a filled copy into the prospect's Drive folder — via a Zapier "Google Slides → Create from Template" action or a small Apps Script bound to the template. **Figma** (fill named text layers via the Figma connector) is the alternative if proposals ever move off Slides. Design constraints to respect: **fixed phase slots** (a variable phase count needs a max-N-slot template that hides unused phases), **text/numbers only** (no dynamic roadmap-bar resizing or restyling), and **images/renders stay manual**. Until this is built, output the paste-ready blocks above. If asked to "fill the doc" or "build the deck," **offer this token-template approach as the next step — do not attempt fragile UI automation.**
+
 ## Configuration & versioning
 
 - **Rate:** $250/hr (current, effective 2025-01-01). Rows before 2025 were $200/hr — normalize historical hours to the current rate for forward estimates. Rate is a parameter; update it in this skill's `metadata.rate_card` when it changes and bump the version.
