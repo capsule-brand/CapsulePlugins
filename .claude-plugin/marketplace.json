@@ -54,8 +54,8 @@
     {
       "name": "capsule-estimator",
       "source": "./plugins/capsule-estimator",
-      "description": "Designed by Capsule. Turns a proposal scope into a grounded, range-based estimate — hours and price by discipline — built from Capsule's own signed history (the Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion). Cites the nearest comparable past jobs, carries a confidence label on every number, and applies Capsule's win-rate guardrails (the $50K line, the 3-discipline rule). Needs the Notion connector.",
-      "version": "0.1.0",
+      "description": "Designed by Capsule. Turns a proposal scope into a grounded, range-based estimate \u2014 hours and price by discipline \u2014 built from Capsule's own signed history (the Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion). Cites the nearest comparable past jobs, carries a confidence label on every number, and applies Capsule's win-rate guardrails (the $50K line, the 3-discipline rule). Needs the Notion connector.",
+      "version": "0.2.0",
       "author": {
         "name": "Capsule",
         "url": "https://clearancelab.ai"
@@ -76,7 +76,7 @@
     {
       "name": "ship-plugin",
       "source": "./plugins/ship-plugin",
-      "description": "Designed by Capsule. Ship a Capsule skill as a Claude Code plugin in one step — scaffold it, version it, publish it to the capsule-plugins marketplace, and install it on both Macs. Use when the user says \"make this a plugin\", \"ship this skill\", \"publish this as a plugin\", \"release the <name> plugin\", \"add <name> to the marketplace\", or wants a SKILL.md turned into an installed, synced plugin. Runs from ~/CapsulePlugins using add-plugin.sh, release.sh, and the claude plugin CLI (needs shell access + SSH to the Mac Studio).",
+      "description": "Designed by Capsule. Ship a Capsule skill as a Claude Code plugin in one step \u2014 scaffold it, version it, publish it to the capsule-plugins marketplace, and install it on both Macs. Use when the user says \"make this a plugin\", \"ship this skill\", \"publish this as a plugin\", \"release the <name> plugin\", \"add <name> to the marketplace\", or wants a SKILL.md turned into an installed, synced plugin. Runs from ~/CapsulePlugins using add-plugin.sh, release.sh, and the claude plugin CLI (needs shell access + SSH to the Mac Studio).",
       "version": "0.1.0",
       "author": {
         "name": "Capsule",
@@ -87,7 +87,7 @@
     {
       "name": "colorproof",
       "source": "./plugins/colorproof",
-      "description": "Designed by Capsule. Proof and correct brand colors across Adobe Illustrator artwork and its exported formats. Use whenever the user wants to check, audit, verify, proof, or \"QC\" colors against known brand values (Pantone/PMS names, CMYK builds, or HEX), and optionally fix what's off — at the scale of a single folder OR an entire multi-format logo package (.ai, vector .pdf, .svg, plus re-rendered .jpg/.png). Trigger on things like \"check these files against our brand colors\", \"proof this logo package\", \"make the orange Pantone 3564 C everywhere\", \"swap the purple to 7683 C across the package\", \"do the colors in this folder match these numbers\", or when the user pastes brand values / a spec-sheet image and points at a folder. Also handles Pantone-to-Pantone spot remaps, pulling the real Lab formula from the Pantone book on the machine. Use it for any brand-color checking or correction of Illustrator artwork, ",
+      "description": "Designed by Capsule. Proof and correct brand colors across Adobe Illustrator artwork and its exported formats. Use whenever the user wants to check, audit, verify, proof, or \"QC\" colors against known brand values (Pantone/PMS names, CMYK builds, or HEX), and optionally fix what's off \u2014 at the scale of a single folder OR an entire multi-format logo package (.ai, vector .pdf, .svg, plus re-rendered .jpg/.png). Trigger on things like \"check these files against our brand colors\", \"proof this logo package\", \"make the orange Pantone 3564 C everywhere\", \"swap the purple to 7683 C across the package\", \"do the colors in this folder match these numbers\", or when the user pastes brand values / a spec-sheet image and points at a folder. Also handles Pantone-to-Pantone spot remaps, pulling the real Lab formula from the Pantone book on the machine. Use it for any brand-color checking or correction of Illustrator artwork, ",
       "version": "0.1.0",
       "author": {
         "name": "Capsule",
@@ -98,7 +98,7 @@
     {
       "name": "reskin",
       "source": "./plugins/reskin",
-      "description": "Designed by Capsule. Restyle an existing site/app to match a reference's look AND feel — including animation. Triggers on \"reskin\", \"make this look like <site/screenshot>\", \"match the feel of this reference\", \"port the animation from\", \"restyle this page to match\", \"give this the same vibe as\". Captures look (DESIGN.md), motion (MOTION.md), fonts, and assets from a live URL or screenshot, then applies them to the current project's presentation layer without touching app logic.",
+      "description": "Designed by Capsule. Restyle an existing site/app to match a reference's look AND feel \u2014 including animation. Triggers on \"reskin\", \"make this look like <site/screenshot>\", \"match the feel of this reference\", \"port the animation from\", \"restyle this page to match\", \"give this the same vibe as\". Captures look (DESIGN.md), motion (MOTION.md), fonts, and assets from a live URL or screenshot, then applies them to the current project's presentation layer without touching app logic.",
       "version": "0.1.0",
       "author": {
         "name": "Capsule",
