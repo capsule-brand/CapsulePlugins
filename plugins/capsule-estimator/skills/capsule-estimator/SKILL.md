@@ -12,8 +12,8 @@ description: >-
   "how many hours is a [discipline]", or preparing a response-and-cost-estimate / SOW for a prospect.
   Reads the live Proposals Index, Pricing Reference, and Discipline Hours Benchmark in Notion.
 metadata:
-  version: 1.4.0
-  updated: 2026-07-31
+  version: 1.5.0
+  updated: 2026-08-06
   rate_card:
     current: 250        # USD/hr, effective 2025-01-01+
     prior: 200          # USD/hr, pre-2025 rows
@@ -34,6 +34,7 @@ Produce a **grounded, range-based, provenance-carrying** estimate for a Capsule 
 7. **Discovery is a phase, not an afterthought.** Almost every Capsule proposal opens with a Download & Discovery phase — pick its tier from project type + budget (see "Discovery tiers"). The exceptions are pure production/hourly jobs and pure dev builds.
 8. **Show the whole picture, not just the fee.** Every estimate also states a **timeline** (weeks, with concurrency) and flags **pass-through / OOP costs** (production, print, prototypes, photography, video, travel, third-party research) as separate "at net" lines. A fee mistaken for the client's total spend erodes trust.
 9. **Qualify RFPs before you invest.** RFP/pitch is historically Capsule's lowest-win channel (~1 in 8, vs ~9 in 10 for repeat clients). When the input is an RFP, run the go/no-go qualification first (see "RFP / brief intake") — a well-reasoned decline is often the best outcome.
+10. **No Notion, no quote — help them connect first.** Every number here comes from live Notion data, so the estimate is only trustworthy when the Notion connector is connected. If it isn't, do NOT silently fall back to stale figures — stop and walk the user through connecting Notion (see "Data sources"), then estimate. Many users won't realize Notion is the missing piece, so name it plainly and give the steps. A stale-data estimate is only ever a clearly-labeled last resort the user explicitly opts into.
 
 ## Data sources (all live in Notion — query, don't hardcode)
 
@@ -42,7 +43,19 @@ Produce a **grounded, range-based, provenance-carrying** estimate for a Capsule 
 - **Pricing Reference** (computed cost/price medians by discipline, the $50K cliff analysis) — page `https://app.notion.com/p/3aa790e0e71a81c78f19e362dd7d03a6`
 - **Discipline Hours Benchmark** (computed hours medians by discipline) — page `https://app.notion.com/p/3ad790e0e71a81b0a0a3e2464907a05f`
 
-Use `notion-query-data-sources` (SQL) for the two databases and `notion-fetch` for the two reference pages. If the Notion connector isn't available, say so and fall back to the last-known benchmark values, clearly flagged as stale.
+Use `notion-query-data-sources` (SQL) for the two databases and `notion-fetch` for the two reference pages.
+
+**If the Notion connector isn't connected, STOP and help the user connect it — do not quietly fall back to stale numbers.** The estimate is only as good as the live Notion data behind it, and many users (especially those newer to Claude) won't realize Notion is what's missing. Lead with a short, friendly message and these exact steps:
+
+> I can't reach Capsule's Notion data yet, so I can't build a grounded estimate. It's a one-time, ~30-second connect:
+> 1. Open the Claude desktop app
+> 2. Go to **Settings → Connectors**
+> 3. Find **Notion** and click **Connect**
+> 4. Sign in to Notion and hit **Allow**
+>
+> Once that's done, ask me again and I'll pull the live numbers.
+
+Only if the user explicitly says they can't connect Notion right now may you offer a rough estimate from last-known benchmark values — and only when it's **clearly labeled "STALE — not from live Notion data"**. Never make the stale path the default, and never present a stale figure without that label.
 
 ## Method
 
@@ -207,7 +220,7 @@ A future addition will let this skill fill the copy **directly into a proposal d
 ## Configuration & versioning
 
 - **Rate:** $250/hr (current, effective 2025-01-01). Rows before 2025 were $200/hr — normalize historical hours to the current rate for forward estimates. Rate is a parameter; update it in this skill's `metadata.rate_card` when it changes and bump the version.
-- **Methodology version:** stamp each estimate with `v1.4.0 (2026-07-31)` so old estimates stay interpretable after the method evolves.
+- **Methodology version:** stamp each estimate with `v1.5.0 (2026-08-06)` so old estimates stay interpretable after the method evolves.
 - **Taxonomy** must match the index `Category` and projects `Discipline` exactly — never introduce a new discipline name here without adding it in both databases.
 
 ## Honest limitations (say these when relevant)
